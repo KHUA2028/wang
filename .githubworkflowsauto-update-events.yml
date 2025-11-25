@@ -1,0 +1,18 @@
+name: 自动更新选座发布日期
+
+on:
+  schedule:
+    # 每天北京时间00:00执行（UTC时间16:00）
+    - cron: '0 16 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  update-events:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 调用Edge Function
+        run: |
+          curl -X POST \
+            https://app-6sqw0b86cvep.supabase.co/functions/v1/auto-update-event-dates \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwcC02c3F3MGI4NmN2ZXAiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczMjU0NzI0MCwiZXhwIjoyMDQ4MTIzMjQwfQ.Uf8xHnVOqKCJqQWqhvJLqKWqhvJLqKWqhvJLqKWqhvJL"
